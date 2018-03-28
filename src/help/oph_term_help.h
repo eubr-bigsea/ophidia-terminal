@@ -1,6 +1,6 @@
 /*
     Ophidia Terminal
-    Copyright (C) 2012-2016 CMCC Foundation
+    Copyright (C) 2012-2017 CMCC Foundation
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -51,6 +51,16 @@ int oph_term_help(const char *cmd);
 "USAGE OF warranty COMMAND\\n\\n\
 \\twarranty\\n\\n\
 \\tShow the Disclaimer of Warranty.\\n"
+
+#define OPH_TERM_HELP_WATCH_SHORT "\"repeat command submission automatically\"\n"
+#define OPH_TERM_HELP_WATCH_LONG \
+"\e[1mUSAGE OF watch COMMAND\e[0m\n\n\
+\twatch [-n seconds] cmd\n\n\
+\tRuns the command \"cmd\" repeatedly, displaying its output. By default, the program is run every 2 seconds; use \"-n\" to specify a different interval.\n"
+#define OPH_TERM_HELP_WATCH_LONG2 \
+"USAGE OF watch COMMAND\\n\\n\
+\\twatch [-n seconds] cmd\\n\\n\
+\\tRuns the command \\\"cmd\\\" repeatedly, displaying its output. By default, the program is run every 2 seconds; use \\\"-n\\\" to specify a different interval.\\n"
 
 #define OPH_TERM_HELP_CONDITIONS_SHORT "\"show the conditions to redistribute the software\"\n"
 #define OPH_TERM_HELP_CONDITIONS_LONG \
@@ -244,8 +254,8 @@ int oph_term_help(const char *cmd);
 #define OPH_TERM_HELP_VIEW_SHORT "\"view jobs output/status\"\n"
 #define OPH_TERM_HELP_VIEW_LONG \
 "\e[1mUSAGE OF view COMMAND\e[0m\n\n\
-\tview WorkflowID[#MarkerID] [iterations [interval]]\n\
-\tview -j JobID [iterations [interval]]\n\n\
+\tview WorkflowID[#MarkerID] [-s status] [iterations [interval]]\n\
+\tview -j JobID [-s status] [iterations [interval]]\n\n\
 \tView the output/status of a workflow associated to the current session, identified by a workflow id, or view\n\
 \tthe output/status of a particular task associated to the current session, identified by a workflow id and a marker id.\n\
 \tWith option \"-j\" view the output/status associated to a particular JobID, even belonging to a different session.\n\
@@ -255,12 +265,14 @@ int oph_term_help(const char *cmd);
 \ta combination of workflow id and marker id.\n\
 \tThe output will be prefixed with a string with the format \"[workflowid#markerid] command [jobid]\".\n\
 \tAccording to the value of OPH_TERM_IMGS, it can produce an image representing the real-time status of a multi-task workflow.\n\
+\tFor running workflows, the option \"-s\" can be used to set a bitmap \"status\" and filter jobs based on their status\n\
+\t(type \"man OPH_RESUME\" and refer to argument \"status_filter\" for further information).\n\
 \tIt is also possible to specify the number of iterations the command will perform (0 for viewing status until workflow ends)\n\
 \tand the time interval (in seconds) between iterations (default is 5 seconds).\n"
 #define OPH_TERM_HELP_VIEW_LONG2 \
 "USAGE OF view COMMAND\\n\\n\
-\\tview WorkflowID[#MarkerID] [iterations [interval]]\\n\
-\\tview -j JobID [iterations [interval]]\\n\\n\
+\\tview WorkflowID[#MarkerID] [-s status] [iterations [interval]]\\n\
+\\tview -j JobID [-s status] [iterations [interval]]\\n\\n\
 \\tView the output/status of a workflow associated to the current session, identified by a workflow id, or view\\n\
 \\tthe output/status of a particular task associated to the current session, identified by a workflow id and a marker id.\\n\
 \\tWith option \\\"-j\\\" view the output/status associated to a particular JobID, even belonging to a different session.\\n\
@@ -270,6 +282,8 @@ int oph_term_help(const char *cmd);
 \\ta combination of workflow id and marker id.\\n\
 \\tThe output will be prefixed with a string with the format \\\"[workflowid#markerid] command [jobid]\\\".\\n\
 \\tAccording to the value of OPH_TERM_IMGS, it can produce an image representing the real-time status of a multi-task workflow.\\n\
+\\tFor running workflows, the option \\\"-s\\\" can be used to set a bitmap \\\"status\\\" and filter jobs based on their status\\n\
+\\t(type \\\"man OPH_RESUME\\\" and refer to argument \\\"status_filter\\\" for further information).\\n\
 \\tIt is also possible to specify the number of iterations the command will perform (0 for viewing status until workflow ends)\\n\
 \\tand the time interval (in seconds) between iterations (default is 5 seconds).\\n"
 #else
@@ -310,7 +324,7 @@ int oph_term_help(const char *cmd);
 \tbefore the validation phase together with variable substitution.\n\
 \tAfter the validation phase, according to the value of OPH_TERM_IMGS, it can produce an image representing the workflow.\n\
 \tWith the option -m it returns the metadata relative to name,author and abstract and, if present,\n\
-\tsessionid,exec_mode,ncores,cwd,cube,callback_url,on_error,command,on_exit and run. In this case validation is not performed.\n"
+\tURL,sessionid,exec_mode,ncores,cwd,cdd,cube,callback_url,on_error,command,on_exit and run. In this case validation is not performed.\n"
 #define OPH_TERM_HELP_CHECK_LONG2 \
 "USAGE OF check COMMAND\\n\\n\
 \\tcheck [-m] workflow.json [param1 [param2 [...]]]\\n\\n\
@@ -319,7 +333,7 @@ int oph_term_help(const char *cmd);
 \\tbefore the validation phase together with variable substitution.\\n\
 \\tAfter the validation phase, according to the value of OPH_TERM_IMGS, it can produce an image representing the workflow.\\n\
 \\tWith the option -m it returns the metadata relative to name,author and abstract and, if present,\\n\
-\\tsessionid,exec_mode,ncores,cwd,cube,callback_url,on_error,command,on_exit and run. In this case validation is not performed.\\n"
+\\tURL,sessionid,exec_mode,ncores,cwd,cdd,cube,callback_url,on_error,command,on_exit and run. In this case validation is not performed.\\n"
 #endif
 
 #define OPH_TERM_HELP_ALIAS_SHORT "\"list aliases\"\n"
@@ -506,9 +520,10 @@ int oph_term_help(const char *cmd);
 \t  \"ncores\": it specifies the number of parallel processes requested for the execution of the operator (default is 1);\n\
 \t  \"sessionid\": it specifies the current session;\n\
 \t  \"cwd\": it specifies the current working directory;\n\
+\t  \"cdd\": it specifies the pathname working directory on data reporitory;\n\
 \t  \"cube\": it specifies the input datacube.\n\
 \tThey are special arguments that the user can explicitly write into the submission string or not,\n\
-\tin which case Oph_Term will look up and use the content of the variables OPH_SESSION_ID, OPH_EXEC_MODE, OPH_NCORES, OPH_CWD or OPH_DATACUBE if existent.\n\
+\tin which case Oph_Term will look up and use the content of the variables OPH_SESSION_ID, OPH_EXEC_MODE, OPH_NCORES, OPH_CWD, OPH_CDD or OPH_DATACUBE if existent.\n\
 \tIn synchronous mode the call is blocking and waits the server response, while in asynchronous mode it is non-blocking and returns just a link\n\
 \tto the file where output will be written by the operator for future analysis.\n"
 #define OPH_TERM_HELP_REMOTE_COMMAND2 \
@@ -529,9 +544,10 @@ int oph_term_help(const char *cmd);
 \\t  \\\"ncores\\\": it specifies the number of parallel processes requested for the execution of the operator (default is 1);\\n\
 \\t  \\\"sessionid\\\": it specifies the current session;\\n\
 \\t  \\\"cwd\\\": it specifies the current working directory;\\n\
+\\t  \\\"cdd\\\": it specifies the pathname working directory on data reporitory;\\n\
 \\t  \\\"cube\\\": it specifies the input datacube.\\n\
 \\tThey are special arguments that the user can explicitly write into the submission string or not,\\n\
-\\tin which case Oph_Term will look up and use the content of the variables OPH_SESSION_ID, OPH_EXEC_MODE, OPH_NCORES, OPH_CWD or OPH_DATACUBE if existent.\\n\
+\\tin which case Oph_Term will look up and use the content of the variables OPH_SESSION_ID, OPH_EXEC_MODE, OPH_NCORES, OPH_CWD, OPH_CCD or OPH_DATACUBE if existent.\\n\
 \\tIn synchronous mode the call is blocking and waits the server response, while in asynchronous mode it is non-blocking and returns just a link\\n\
 \\tto the file where output will be written by the operator for future analysis.\\n"
 
@@ -540,7 +556,7 @@ int oph_term_help(const char *cmd);
 "\e[1mHOW TO SUBMIT AN ENTIRE WORKFLOW\e[0m\n\n\
 \t./workflow.json [param1 [param2 [...]]]\n\n\
 \tSubmit an entire workflow to the Ophidia server.\n\
-\tOPH_SESSION_ID,OPH_EXEC_MODE,OPH_NCORES,OPH_CWD and OPH_DATACUBE will be inserted in\n\
+\tOPH_SESSION_ID,OPH_EXEC_MODE,OPH_NCORES,OPH_CWD,OPH_CDD and OPH_DATACUBE will be inserted in\n\
 \tthe JSON request (original file will remain untouched) if not already present.\n\
 \t\"./workflow.json\" must be the name of a valid local JSON file according to the Ophidia Workflow JSON Schema.\n\
 \tWith one or more parameters, the parameter substitution ($1,$2 etc.) is performed before the validation phase\n\
@@ -550,7 +566,7 @@ int oph_term_help(const char *cmd);
 "HOW TO SUBMIT AN ENTIRE WORKFLOW\\n\\n\
 \\t./workflow.json [param1 [param2 [...]]]\\n\\n\
 \\tSubmit an entire workflow to the Ophidia server.\\n\
-\\tOPH_SESSION_ID,OPH_EXEC_MODE,OPH_NCORES,OPH_CWD and OPH_DATACUBE will be inserted in\\n\
+\\tOPH_SESSION_ID,OPH_EXEC_MODE,OPH_NCORES,OPH_CWD,OPH_CDD and OPH_DATACUBE will be inserted in\\n\
 \\tthe JSON request (original file will remain untouched) if not already present.\\n\
 \\t\\\"./workflow.json\\\" must be the name of a valid local JSON file according to the Ophidia Workflow JSON Schema.\\n\
 \\tWith one or more parameters, the parameter substitution ($1,$2 etc.) is performed before the validation phase\\n\
@@ -707,6 +723,14 @@ int oph_term_help(const char *cmd);
 "OPH_CWD\\n\
 \\tCurrent working directory. It defaults to the session's root folder (/).\\n"
 
+#define OPH_TERM_HELP_OPH_CCD_SHORT "\"current data directory\"\n"
+#define OPH_TERM_HELP_OPH_CCD_LONG \
+"\e[1mOPH_CCD\e[0m\n\
+\tCurrent data directory. It defaults to root folder (/).\n"
+#define OPH_TERM_HELP_OPH_CCD_LONG2 \
+"OPH_CCD\\n\
+\\tCurrent data directory. It defaults to root folder (/).\\n"
+
 #define OPH_TERM_HELP_OPH_USER_SHORT "\"username\"\n"
 #define OPH_TERM_HELP_OPH_USER_LONG \
 "\e[1mOPH_USER\e[0m\n\
@@ -722,6 +746,14 @@ int oph_term_help(const char *cmd);
 #define OPH_TERM_HELP_OPH_PASSWD_LONG2 \
 "OPH_PASSWD\\n\
 \\tPassword used to connect to the remote server when SSL is used (default). With the GSI interface it is ignored.\\n"
+
+#define OPH_TERM_HELP_OPH_TOKEN_SHORT "\"token\"\n"
+#define OPH_TERM_HELP_OPH_TOKEN_LONG \
+"\e[1mOPH_TOKEN\e[0m\n\
+\tToken used to connect to the remote server by using OpenId. If it is set, username and password will be ignored.\n"
+#define OPH_TERM_HELP_OPH_TOKEN_LONG2 \
+"OPH_TOKEN\\n\
+\\tToken used to connect to the remote server by using OpenId. If it is set, username and password will be ignored.\\n"
 
 #define OPH_TERM_HELP_OPH_SERVER_HOST_SHORT "\"server address\"\n"
 #define OPH_TERM_HELP_OPH_SERVER_HOST_LONG \
@@ -797,6 +829,20 @@ int oph_term_help(const char *cmd);
 \\t\\t- extended : the same as basic with other information regarding data sources, producers, consumers etc.;\\n\
 \\t\\t- extended_coloured : the same as extended but with colors (same color as prompt).\\n"
 
+#define OPH_TERM_HELP_OPH_TERM_FORMAT_SHORT "\"output format of command 'view'\"\n"
+#define OPH_TERM_HELP_OPH_TERM_FORMAT_LONG \
+"\e[1mOPH_TERM_FORMAT\e[0m\n\
+\tOutput format of the command 'view'.\n\
+\tPossible values are:\n\
+\t\t- classic : print all the data in JSON Response;\n\
+\t\t- compact : print the JSON Response without the Workflow Task List.\n"
+#define OPH_TERM_HELP_OPH_TERM_FORMAT_LONG2 \
+"OPH_TERM_FORMAT\\n\
+\\tOutput format of the command 'view'.\\n\
+\\tPossible values are:\\n\
+\\t\\t- classic : print all the data in JSON Response;\\n\
+\\t\\t- compact : print the JSON Response without the Workflow Task List.\\n"
+
 #ifndef NO_WORKFLOW
 #define OPH_TERM_HELP_OPH_TERM_IMGS_SHORT "\"save and/or auto-open images\"\n"
 #define OPH_TERM_HELP_OPH_TERM_IMGS_LONG \
@@ -856,17 +902,25 @@ int oph_term_help(const char *cmd);
 #define OPH_TERM_HELP_OPH_WORKFLOW_AUTOVIEW_SHORT "\"auto-view status\"\n"
 #define OPH_TERM_HELP_OPH_WORKFLOW_AUTOVIEW_LONG \
 "\e[1mOPH_WORKFLOW_AUTOVIEW\e[0m\n\
-\tIf set to \"on_X_Y\" Oph_Term will automatically call the \"view\" command after a workflow submission\n\
-\tusing the submitted workflow id, \"X\" as the number of iterations and \"Y\" as the time interval.\n\
-\tThe resulting command will be \"view <wid> X Y\".\n\
-\t\"on\" without \"X\" and \"Y\" translates to \"view <wid> 0 5\".\n\
+\tIf set to \"on\" Oph_Term will automatically call the command \"view <wid> 0 5\" after a workflow submission\n\
+\t(<wid> is the related workflow identifier).\n\
+\tThis option enables the workflow to be automatically shown graphically, provided that \e[1mOPH_TERM_IMGS\e[0m is set to \"open\".\n\
+\tIn case of synchronous execution mode (\"\e[1mexec_mode\e[0m\" set to \"sync\") only the final representation is shown.\n\
+\tOtherwise, in case of asynchronous execution mode (\"\e[1mexec_mode\e[0m\" set to \"async\"), the workflow is shown even\n\
+\tduring the execution; then, the image is periodically updated until the final representation.\n\
+\tIf set to \"on_X_Y\" Oph_Term will call the command \"view <wid> <X> <Y>\", using\n\
+\t\"X\" as the number of iterations and \"Y\" as the time interval [in seconds].\n\
 \tThe default value \"off\" prevents this behaviour from happening.\n"
 #define OPH_TERM_HELP_OPH_WORKFLOW_AUTOVIEW_LONG2 \
 "OPH_WORKFLOW_AUTOVIEW\\n\
-\\tIf set to \\\"on_X_Y\\\" Oph_Term will automatically call the \\\"view\\\" command after a workflow submission\\n\
-\\tusing the submitted workflow id, \\\"X\\\" as the number of iterations and \\\"Y\\\" as the time interval.\\n\
-\\tThe resulting command will be \\\"view <wid> X Y\\\".\\n\
-\\t\\\"on\\\" without \\\"X\\\" and \\\"Y\\\" translates to \\\"view <wid> 0 5\\\".\\n\
+\\tIf set to \\\"on\\\" Oph_Term will automatically call the command \\\"view <wid> 0 5\\\" after a workflow submission\\n\
+\\t(<wid> is the related workflow identifier).\\n\
+\\tThis option enables the workflow to be automatically shown graphically, provided that \\e[1mOPH_TERM_IMGS\\e[0m is set to \\\"open\\\".\\n\
+\\tIn case of synchronous execution mode (\\\"\\e[1mexec_mode\\e[0m\\\" set to \\\"sync\\\") only the final representation is shown.\\n\
+\\tOtherwise, in case of asynchronous execution mode (\\\"\\e[1mexec_mode\\e[0m\\\" set to \\\"async\\\"), the workflow is shown even\\n\
+\\tduring the execution; then, the image is periodically updated until the final representation.\\n\
+\\tIf set to \\\"on_X_Y\\\" Oph_Term will call the command \\\"view <wid> <X> <Y>\\\", using\\n\
+\\t\\\"X\\\" as the number of iterations and \\\"Y\\\" as the time interval [in seconds].\\n\
 \\tThe default value \\\"off\\\" prevents this behaviour from happening.\\n"
 
 #ifdef WITH_IM_SUPPORT

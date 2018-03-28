@@ -1,6 +1,6 @@
 /*
     Ophidia Terminal
-    Copyright (C) 2012-2016 CMCC Foundation
+    Copyright (C) 2012-2017 CMCC Foundation
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -42,6 +42,8 @@
 #define WRAPPING_WORKFLOW4d_1 "\","
 #define WRAPPING_WORKFLOW4e "\n  \"cube\":\""
 #define WRAPPING_WORKFLOW4e_1 "\","
+#define WRAPPING_WORKFLOW4f "\n  \"cdd\":\""
+#define WRAPPING_WORKFLOW4f_1 "\","
 #define WRAPPING_WORKFLOW5 "\n  \"tasks\": [\n    {\n      \"name\":\"Task 0\",\n      \"operator\":\""
 #define WRAPPING_WORKFLOW5_1 "\",\n      \"arguments\": ["
 #define WRAPPING_WORKFLOW6 "\"%s\""
@@ -59,6 +61,7 @@
 // - user,password,host,port are login parameters
 // - workflow_wrap 1 for wrapping a command in a 1-task workflow, 0 for taking query as is
 // - hashtbl current environment
-int oph_term_client(char *cmd_line,char *command,char **newsession,char *user,char *password,char *host,char *port, int *return_value, char **out_response, char **out_response_for_viewer, int workflow_wrap, HASHTBL *hashtbl);
+int oph_term_client(char *cmd_line, char *command, char **newsession, char *user, char *password, char *host, char *port, int *return_value, char **out_response, char **out_response_for_viewer,
+		    int workflow_wrap, HASHTBL * hashtbl);
 
 #endif

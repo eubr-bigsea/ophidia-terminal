@@ -1,6 +1,6 @@
 #
 #    Ophidia Terminal
-#    Copyright (C) 2012-2016 CMCC Foundation
+#    Copyright (C) 2012-2017 CMCC Foundation
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 #
 
 AC_PREREQ([2.60])
-AC_INIT([ophidia-terminal], [0.9.0], [ophidia-info@lists.cmcc.it])
+AC_INIT([ophidia-terminal], [1.2.0], [ophidia-info@cmcc.it])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR([config])
@@ -230,12 +230,15 @@ if test "x${interface_type}" = "xssl"; then
 INTERFACE_TYPE=$interface_type
 elif test "x${interface_type}" = "xgsi"; then
 INTERFACE_TYPE=$interface_type
+elif test "x${interface_type}" = "xwps"; then
+INTERFACE_TYPE=$interface_type
 else
 AC_MSG_ERROR(Unsupported interface type)
 fi
 AC_SUBST(INTERFACE_TYPE)
 AM_CONDITIONAL([INTERFACE_TYPE_IS_SSL], [test "x$interface_type" = "xssl"])
 AM_CONDITIONAL([INTERFACE_TYPE_IS_GSI], [test "x$interface_type" = "xgsi"])
+AM_CONDITIONAL([INTERFACE_TYPE_IS_WPS], [test "x$interface_type" = "xwps"])
 
 AC_ARG_WITH(globus-libs,
                                 [  --with-globus-libs=GLOBUS_LIB_LOCATION   Set the Globus library location],
@@ -337,6 +340,41 @@ AC_ARG_ENABLE(im-support,
 if test "x${im_support}" = "xyes"; then
     AC_MSG_NOTICE("Enabled IM support")
     OPT+=" -DWITH_IM_SUPPORT"
+fi
+
+base_src_path=
+AC_ARG_ENABLE(base_src_path,
+       [  --enable-base-src-path    Enable support for OPH_BASE_SRC_PATH. (Disabled by default)],
+       [
+            if test "x$enableval" = "xno"; then
+                base_src_path="no"
+            else
+                base_src_path="yes"
+            fi
+       ],
+       [ base_src_path="no"]
+       )
+if test "x${base_src_path}" = "xyes"; then
+    AC_MSG_NOTICE("Enabled OPH_BASE_SRC_PATH support")
+    OPT+=" -DCHDDIR"
+fi
+
+xml_ssl_check=
+AC_ARG_ENABLE(xml_ssl_check,
+       [  --disable-xml-ssl-check    [Disable verification of SSL certificates when 
+				downloading operators XML. (Enabled by default)]],
+       [
+            if test "x$enableval" = "xno"; then
+                xml_ssl_check="no"
+            else
+                xml_ssl_check="yes"
+            fi
+       ],
+       [ xml_ssl_check="yes"]
+       )
+if test "x${xml_ssl_check}" = "xno"; then
+    AC_MSG_NOTICE("Disabled XML SSL certificate check")
+    OPT+=" -DNO_XML_SSL_CHECK"
 fi
 
 case "${host}" in

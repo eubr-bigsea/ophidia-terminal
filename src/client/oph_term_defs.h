@@ -1,6 +1,6 @@
 /*
     Ophidia Terminal
-    Copyright (C) 2012-2016 CMCC Foundation
+    Copyright (C) 2012-2017 CMCC Foundation
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,31 +25,31 @@
 #ifndef INTERFACE_TYPE_IS_WPS
 #include "stdsoap2.h"
 // Types
-typedef char*       xsd__anyURI;
-typedef char        xsd__boolean;
-typedef char*       xsd__date;
-typedef time_t      xsd__dateTime;
-typedef double      xsd__double;
-typedef char*       xsd__duration;
-typedef float       xsd__float;
-typedef char*       xsd__time;
-typedef char*       xsd__decimal;
-typedef char*       xsd__integer;
-typedef LONG64      xsd__long;
-typedef long        xsd__int;
-typedef short       xsd__short;
-typedef char        xsd__byte;
-typedef char*       xsd__nonPositiveInteger;
-typedef char*       xsd__negativeInteger;
-typedef char*       xsd__nonNegativeInteger;
-typedef char*       xsd__positiveInteger;
-typedef ULONG64     xsd__unsignedLong;
-typedef unsigned long   xsd__unsignedInt;
-typedef unsigned short  xsd__unsignedShort;
-typedef unsigned char   xsd__unsignedByte;
-typedef char*       xsd__string;
-typedef char*       xsd__normalizedString;
-typedef char*       xsd__token;
+typedef char *xsd__anyURI;
+typedef char xsd__boolean;
+typedef char *xsd__date;
+typedef time_t xsd__dateTime;
+typedef double xsd__double;
+typedef char *xsd__duration;
+typedef float xsd__float;
+typedef char *xsd__time;
+typedef char *xsd__decimal;
+typedef char *xsd__integer;
+typedef LONG64 xsd__long;
+typedef long xsd__int;
+typedef short xsd__short;
+typedef char xsd__byte;
+typedef char *xsd__nonPositiveInteger;
+typedef char *xsd__negativeInteger;
+typedef char *xsd__nonNegativeInteger;
+typedef char *xsd__positiveInteger;
+typedef ULONG64 xsd__unsignedLong;
+typedef unsigned long xsd__unsignedInt;
+typedef unsigned short xsd__unsignedShort;
+typedef unsigned char xsd__unsignedByte;
+typedef char *xsd__string;
+typedef char *xsd__normalizedString;
+typedef char *xsd__token;
 #endif
 
 // Server errors

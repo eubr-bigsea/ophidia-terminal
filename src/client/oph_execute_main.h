@@ -1,6 +1,6 @@
 /*
     Ophidia Terminal
-    Copyright (C) 2012-2016 CMCC Foundation
+    Copyright (C) 2012-2017 CMCC Foundation
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,13 +27,12 @@
 //gsoap oph  service method-action:        ophExecuteMain ""
 //gsoap oph  service method-documentation: ophExecuteMain Execute a command using the oph-parallel-framework
 
-struct oph__ophResponse
-{
-	xsd__string	jobid;
-	xsd__string	response;
-	xsd__int	error;
+struct oph__ophResponse {
+	xsd__string jobid;
+	xsd__string response;
+	xsd__int error;
 };
-int oph__ophExecuteMain(xsd__string ophExecuteMainRequest, struct oph__ophResponse* ophExecuteMainResponse);
+int oph__ophExecuteMain(xsd__string ophExecuteMainRequest, struct oph__ophResponse *ophExecuteMainResponse);
 
 
-#endif /* OPH_EXECUTE_MAIN_H_ */
+#endif				/* OPH_EXECUTE_MAIN_H_ */

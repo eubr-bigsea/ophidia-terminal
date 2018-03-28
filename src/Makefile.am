@@ -1,6 +1,6 @@
 #
 #    Ophidia Terminal
-#    Copyright (C) 2012-2016 CMCC Foundation
+#    Copyright (C) 2012-2017 CMCC Foundation
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -54,6 +54,14 @@ liboph_term_client_la_LDFLAGS = -static $(MYLDFLAGS)
 liboph_term_client_la_LIBADD = $(LIBXML_LIB) $(LIBCURL_LIB) -lpthread
 endif
 
+if INTERFACE_TYPE_IS_WPS
+IFLAG += -DINTERFACE_TYPE_IS_WPS
+liboph_term_client_la_SOURCES = client/$(INTERFACE_TYPE)/oph_term_client.c
+liboph_term_client_la_CFLAGS= -prefer-pic -I. -Iclient -Iclient/$(INTERFACE_TYPE) -Ienv ${lib_CFLAGS} $(OPT) -DWITH_DOM $(LIBXML_INCLUDE) $(LIBCURL_INCLUDE) $(IFLAG)
+liboph_term_client_la_LDFLAGS = -static
+liboph_term_client_la_LIBADD = $(LIBXML_LIB) $(LIBCURL_LIB) -lpthread
+endif
+
 LIBRARY += liboph_term_env.la
 liboph_term_env_la_SOURCES = env/oph_term_env.c env/hashtbl.c
 liboph_term_env_la_CFLAGS= -prefer-pic -I. -Ienv -Iclient ${lib_CFLAGS} $(OPT) $(LIBXML_INCLUDE) $(LIBCURL_INCLUDE) $(IFLAG)
@@ -84,7 +92,7 @@ bin_PROGRAMS=oph_term
 bindir=${prefix}/bin
 
 oph_term_SOURCES= oph_term.c
-oph_term_CFLAGS= $(OPT) -I. -Iclient -Ienv -Ihelp -Iviewer -Iworkflow ${lib_CFLAGS} $(LIBZ_INCLUDE) $(LIBXML_INCLUDE) $(FLAG)
+oph_term_CFLAGS= $(OPT) -I. -Iclient -Ienv -Ihelp -Iviewer -Iworkflow ${lib_CFLAGS} $(LIBZ_INCLUDE) $(LIBXML_INCLUDE) $(FLAG) -DPACKAGE_VERSION=\"@PACKAGE_VERSION@\"
 oph_term_LDADD= -L. -loph_term_client -loph_term_env -loph_term_help -loph_term_viewer -loph_term_workflow -lreadline -lhistory $(LIBZ_LIB) -lncurses -lm -lpthread
 
 distclean-local:

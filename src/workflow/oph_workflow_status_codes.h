@@ -1,6 +1,6 @@
 /*
     Ophidia Terminal
-    Copyright (C) 2012-2016 CMCC Foundation
+    Copyright (C) 2012-2017 CMCC Foundation
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,4 +25,4 @@
 #define OPH_WORKFLOW_STATUS_COMPLETED	11
 #define OPH_WORKFLOW_STATUS_ERROR	12
 
-#endif //__OPH_WORKFLOW_STATUS_CODES_H
+#endif				//__OPH_WORKFLOW_STATUS_CODES_H

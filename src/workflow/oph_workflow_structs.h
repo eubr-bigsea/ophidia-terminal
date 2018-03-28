@@ -1,6 +1,6 @@
 /*
     Ophidia Terminal
-    Copyright (C) 2012-2016 CMCC Foundation
+    Copyright (C) 2012-2017 CMCC Foundation
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ typedef struct _oph_workflow_light_task {
 	char **arguments_keys;
 	char **arguments_values;
 	int arguments_num;
-	char* response;
+	char *response;
 } oph_workflow_light_task;
 
 /* \brief Struct for an OPH_WORKFLOW dependency
@@ -112,12 +112,12 @@ typedef struct _oph_workflow_task {
 	char **outputs_keys;
 	char **outputs_values;
 	int outputs_num;
-	oph_workflow_light_task* light_tasks;
+	oph_workflow_light_task *light_tasks;
 	int light_tasks_num;
 	int residual_light_tasks_num;
 	int retry_num;
 	int residual_retry_num;
-	char* response;
+	char *response;
 	int exit_action;
 	int run;
 	int parent;
@@ -133,10 +133,12 @@ typedef struct _oph_workflow_task {
  * \param name Name of the workflow
  * \param author Author of the workflow
  * \param abstract Abstract of the workflow
+ * \param url URL of the workflow
  * \param sessionid SessionID for the entire workflow
  * \param exec_mode Execution mode for the entire workflow
  * \param ncores Number of cores for the entire workflow
  * \param cwd CWD for the entire workflow
+ * \param cdd CDD for the entire workflow
  * \param command Original command submitted by the user
  * \param cube Cube PID for the entire workflow
  * \param callback_url Callback URL for the entire workflow
@@ -144,7 +146,9 @@ typedef struct _oph_workflow_task {
  * \param tasks_num Number of tasks
  * \param residual_tasks_num Number of residual tasks (initialized to tasks_num)
  * \param response Output of the execution
- * \param exit_values Values to be used in the operation executed on the end of workflow 
+ * \param exit_values Values to be used in the operation executed on the end of workflow
+ * \param output_format Format to code workflow output
+ * \param host_partition Host partition to be used during the workflow
  */
 typedef struct _oph_workflow {
 	int idjob;
@@ -156,27 +160,31 @@ typedef struct _oph_workflow {
 	char *name;
 	char *author;
 	char *abstract;
+	char *url;
 	char *sessionid;
 	char *exec_mode;
 	int ncores;
 	char *command;
 	char *cwd;
+	char *cdd;
 	char *cube;
 	char *callback_url;
 	oph_workflow_task *tasks;
 	int tasks_num;
 	int residual_tasks_num;
-	char* response;
-	char* exit_values;
-	char* on_error;
-	char* on_exit;
-	char* run;
+	char *response;
+	char *exit_values;
+	char *on_error;
+	char *on_exit;
+	char *run;
+	int output_format;
+	char *host_partition;
 } oph_workflow;
 
 /* Functions for structs cleanup */
-int oph_workflow_free(oph_workflow *workflow);
-int oph_workflow_task_free(oph_workflow_task *task);
-int oph_workflow_dep_free(oph_workflow_dep *dep);
-int oph_workflow_light_task_free(oph_workflow_light_task *light_task);
+int oph_workflow_free(oph_workflow * workflow);
+int oph_workflow_task_free(oph_workflow_task * task);
+int oph_workflow_dep_free(oph_workflow_dep * dep);
+int oph_workflow_light_task_free(oph_workflow_light_task * light_task);
 
-#endif //__OPH_WORKFLOW_STRUCTS_H
+#endif				//__OPH_WORKFLOW_STRUCTS_H

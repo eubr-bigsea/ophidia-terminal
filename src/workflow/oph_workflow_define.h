@@ -1,6 +1,6 @@
 /*
     Ophidia Terminal
-    Copyright (C) 2012-2016 CMCC Foundation
+    Copyright (C) 2012-2017 CMCC Foundation
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -35,7 +35,14 @@
 #define OPH_WORKFLOW_REPEAT		"repeat"
 #define OPH_WORKFLOW_DELETE		"oph_delete"
 
+#define OPH_WORKFLOW_CLASSIC		"classic"
+#define OPH_WORKFLOW_COMPACT		"compact"
+
 #define OPH_OPERATOR_FOR		"oph_for"
 #define OPH_OPERATOR_ENDFOR		"oph_endfor"
+#define OPH_OPERATOR_IF			"oph_if"
+#define OPH_OPERATOR_ELSEIF		"oph_elseif"
+#define OPH_OPERATOR_ELSE		"oph_else"
+#define OPH_OPERATOR_ENDIF		"oph_endif"
 
-#endif //__OPH_WORKFLOW_DEFINE_H
+#endif				//__OPH_WORKFLOW_DEFINE_H

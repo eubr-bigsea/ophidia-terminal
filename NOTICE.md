@@ -2,7 +2,7 @@ Ophidia Terminal General
 ------------------------
 
 Ophidia Terminal
-Copyright (C) 2012-2016 CMCC Foundation
+Copyright (C) 2012-2017 CMCC Foundation
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,6 +16,9 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+Source code is available on github at: 
+https://github.com/OphidiaBigData/ophidia-terminal
 
 =====================================================================
 
@@ -55,7 +58,7 @@ http://www.libssh2.org/license.html
 
 - Hash table</br>
 Creative Commons CC0 1.0</br>
-http://en.literateprograms.org/Hash_table_(C)
+https://creativecommons.org/publicdomain/zero/1.0/
 
 - gSOAP XML Web services tools</br>
 GPLv2</br>
@@ -75,4 +78,11 @@ http://www.apache.org/licenses/
 
 <b>Note</b>:</br>
 This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit.
+
+=====================================================================
+
+<b>Acknowledgement</b>:</br>
+This software has been also supported by:
+
+- the Horizon 2020 Framework Programme through the INDIGO-DataCloud Project, RIA-653549
 
